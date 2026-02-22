@@ -2,8 +2,9 @@ package com.hemebiotech.analytics;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnalyticsCounter {
 	private static int headacheCount = 0;
@@ -11,6 +12,7 @@ public class AnalyticsCounter {
 	private static int pupilCount = 0;
 
 	public static void main(String args[]) throws Exception {
+		Map<String, Integer> symptomCounts = new HashMap<>();
 
 		try (BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"))) {
 			String line = reader.readLine();
@@ -32,13 +34,14 @@ public class AnalyticsCounter {
 			System.out.println("Error reading file");
 
 		}
-		try (FileWriter writer = new FileWriter("result.out")) {
-			writer.write("headache: " + headacheCount + "\n");
-			writer.write("rash: " + rashCount + "\n");
-			writer.write("dialated pupils: " + pupilCount + "\n");
-		} catch (IOException e) {
-			System.out.println("Error writing file");
-		}
+
+		// Writes symptom data
+		symptomCounts.put("headache", headacheCount);
+		symptomCounts.put("rash", rashCount);
+		symptomCounts.put("dialated pupils", pupilCount);
+
+		ISymptomWriter writer = new WriteSymptomDataToFile("result.out");
+		writer.writeSymptoms(symptomCounts);
 
 	}
 }
