@@ -3,6 +3,13 @@ package com.hemebiotech.analytics;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Entry point of the symptom analytics application.
+ * 
+ * This class orchestrates the workflow: reading symptoms from a source,
+ * counting their occurrences, sorting them alphabetically, and writing the
+ * results to a file.
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -26,7 +33,7 @@ public class Main {
 		Map<String, Integer> symptomsSorted = counter.sortSymptoms(symptomsCounter);
 		System.out.println("Symptoms sorting finished.");
 
-		// Write result in file
+		// write symptoms to file
 		counter.writeSymptoms(symptomsSorted);
 		System.out.println("Results written to file: resources/result.out");
 
